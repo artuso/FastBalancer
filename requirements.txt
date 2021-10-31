@@ -12,4 +12,3 @@ pytest-dependency
 pytest-asyncio
 httpx
 asgi-lifespan
-mongomock

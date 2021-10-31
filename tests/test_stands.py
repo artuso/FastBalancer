@@ -9,7 +9,7 @@ class TestStandsRoutes:
         res = await api_client.get(url="/stands")
         await api_client.aclose()
         assert res.status_code == 200
-        assert len(res.json()) == 10
+        assert len(res.json()) == 4
 
     @pytest.mark.asyncio
     async def test_get_stand_by_id(self, api_client, db_client) -> None:
@@ -22,21 +22,21 @@ class TestStandsRoutes:
     @pytest.mark.dependency(name="post_stand")
     @pytest.mark.asyncio
     async def test_post_stand(self, api_client) -> None:
-        payload = {"name": "stand_11", "address": "0.0.0.10", "platform": "ios", "available": True}
+        payload = {"name": "stand_0", "address": "0.0.0.10", "platform": "ios", "available": True}
         res = await api_client.post(url="/stand", json=payload)
         await api_client.aclose()
         assert res.status_code == 200
-        assert len(res.json()) == 11
-        assert res.json()[10]["name"] == payload["name"]
-        assert res.json()[10]["address"] == payload["address"]
-        assert res.json()[10]["platform"] == payload["platform"]
-        assert res.json()[10]["available"] == payload["available"]
+        assert len(res.json()) == 5
+        assert res.json()[4]["name"] == payload["name"]
+        assert res.json()[4]["address"] == payload["address"]
+        assert res.json()[4]["platform"] == payload["platform"]
+        assert res.json()[4]["available"] == payload["available"]
 
     @pytest.mark.dependency(depends=["post_stand"])
     @pytest.mark.asyncio
     async def test_put_stand(self, api_client, db_client) -> None:
-        stand = serialize_list(db_client.connection.appium.stand.find())[10]
-        payload = {"name": "stand_12", "address": "0.0.0.11", "platform": "ios", "available": True}
+        stand = serialize_list(db_client.connection.appium.stand.find())[4]
+        payload = {"name": "stand_00", "address": "0.0.0.11", "platform": "ios", "available": True}
         res = await api_client.put(url=f"/stand/{stand['_id']}", json=payload)
         await api_client.aclose()
         assert res.status_code == 200
@@ -48,7 +48,7 @@ class TestStandsRoutes:
     @pytest.mark.dependency(depends=["post_stand"])
     @pytest.mark.asyncio
     async def test_patch_stand(self, api_client, db_client) -> None:
-        stand = serialize_list(db_client.connection.appium.stand.find())[10]
+        stand = serialize_list(db_client.connection.appium.stand.find())[4]
         payload = {"available": False}
         res = await api_client.patch(url=f"/stand/{stand['_id']}", json=payload)
         await api_client.aclose()
@@ -61,9 +61,9 @@ class TestStandsRoutes:
     @pytest.mark.dependency(depends=["post_stand"])
     @pytest.mark.asyncio
     async def test_delete_stand(self, api_client, db_client) -> None:
-        stand = serialize_list(db_client.connection.appium.stand.find())[10]
+        stand = serialize_list(db_client.connection.appium.stand.find())[4]
         res = await api_client.delete(url=f"/stand/{stand['_id']}")
         await api_client.aclose()
         assert res.status_code == 200
         assert res.json()["_id"] == stand['_id']
-        assert len(serialize_list(db_client.connection.appium.stand.find())) == 10
+        assert len(serialize_list(db_client.connection.appium.stand.find())) == 4

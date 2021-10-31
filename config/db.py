@@ -1,25 +1,25 @@
+from dotenv import dotenv_values
 from pymongo import MongoClient
-import mongomock
 import json
-import os
+
+config = dotenv_values(".env")
 
 
 class DB:
 
-    def __init__(self, host="localhost", port="27017", db="appium", user=None, password=None):
-        #os.environ["TESTING"] = "1"
-        if "TESTING" not in os.environ:
-            if user is None:
-                link = f"mongodb://{host}:{port}/{db}"
-            else:
-                link = f"mongodb://{user}:{password}@{host}:{port}/{db}"
-            self.connection = MongoClient(link)
-        elif int(os.environ.get("TESTING")):
-            self.connection = mongomock.MongoClient(f"mongodb://{host}:{port}/{db}_test")
+    def __init__(self, host=config["MONGO_HOST"], port=config["MONGO_PORT"], db=config["MONGO_DB"],
+                 user=config["MONGO_USER"], password=config["MONGO_PASSWORD"]):
+        if user == '':
+            link = f"mongodb://{host}:{port}/{db}"
+        else:
+            link = f"mongodb://{user}:{password}@{host}:{port}/{db}"
+        self.connection = MongoClient(link)
 
+    def clear_stand_document(self):
         self.connection.appium.stand.delete_many({})
 
-        with open('./config/stands.json') as json_file:
+    def add_defaults_stands(self, file_name):
+        with open(f'./config/{file_name}') as json_file:
             data = json.load(json_file)
             for stand in data:
                 stand.update({"available": True})
