@@ -46,4 +46,4 @@ jobs:
         uvicorn index:app &
     - name: Test with pytest
       run: |
-        pytest
+        pytest -o log_cli=true
