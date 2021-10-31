@@ -1,0 +1,52 @@
+[
+  {
+    "name": "stand_1",
+    "address": "0.0.0.0",
+    "platform": "android"
+  },
+  {
+    "name": "stand_2",
+    "address": "0.0.0.1",
+    "platform": "android"
+  },
+    {
+    "name": "stand_3",
+    "address": "0.0.0.2",
+    "platform": "android"
+  },
+  {
+    "name": "stand_4",
+    "address": "0.0.0.3",
+    "platform": "android"
+  },
+    {
+    "name": "stand_5",
+    "address": "0.0.0.4",
+    "platform": "android"
+  },
+  {
+    "name": "stand_6",
+    "address": "0.0.0.5",
+    "platform": "ios"
+  },
+    {
+    "name": "stand_7",
+    "address": "0.0.0.6",
+    "platform": "ios"
+  },
+  {
+    "name": "stand_8",
+    "address": "0.0.0.7",
+    "platform": "ios"
+  },
+    {
+    "name": "stand_9",
+    "address": "0.0.0.8",
+    "platform": "ios"
+  },
+  {
+    "name": "stand_10",
+    "address": "0.0.0.9",
+    "platform": "ios"
+  }
+]
