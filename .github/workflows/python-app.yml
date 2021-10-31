@@ -43,7 +43,7 @@ jobs:
         mongodb-port: 27017
     - name: Start APP
       run: |
-        uvicorn index:app
+        uvicorn index:app &
     - name: Test with pytest
       run: |
         pytest
