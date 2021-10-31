@@ -1,9 +1,8 @@
 from routes.accessibility import accessibility
-from dotenv import dotenv_values
 from routes.stand import stand
 from fastapi import FastAPI
-
 from config.db import DB
+import os
 
 
 def start_app():
@@ -13,8 +12,10 @@ def start_app():
     return fa
 
 
-config = dotenv_values(".env")
 app = start_app()
-db = DB(host=config["MONGO_HOST"], port=config["MONGO_PORT"], db=config["MONGO_DB"])
-
-
+db = DB()
+db.clear_stand_document()
+if "TESTING" not in os.environ:
+    db.add_defaults_stands('main_stands.json')
+else:
+    db.add_defaults_stands('test_stands.json')
