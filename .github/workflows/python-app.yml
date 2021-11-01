@@ -46,4 +46,6 @@ jobs:
         uvicorn index:app &
     - name: Test with pytest
       run: |
-        pytest -o log_cli=true
+        pytest -o log_cli=true --alluredir=./allure-results
+    - name: Allure Report with history
+      uses: simple-elf/allure-report-action@v1.5

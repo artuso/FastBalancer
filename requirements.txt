@@ -12,3 +12,4 @@ pytest-dependency
 pytest-asyncio
 httpx
 asgi-lifespan
+allure-pytest
