@@ -1,9 +1,9 @@
 from schemas.serialize import serialize_dict, serialize_list
-
 from fastapi import APIRouter
+from random import randint
 from bson import ObjectId
 from config.db import DB
-
+from time import sleep
 
 
 accessibility = APIRouter()
@@ -20,6 +20,8 @@ async def get_available_stand(platform: str):
     stands = serialize_list(db.connection.appium.stand.find({"available": True, "platform": platform}, limit=1))
     if len(stands) != 0:
         db.connection.appium.stand.update_one({"_id": ObjectId(stands[0]["_id"])}, {"$set": {"available": False}})
+        # Simulating the restoration of the stand to its initial state
+        sleep(randint(0, 3))
         return serialize_dict(db.connection.appium.stand.find_one({"_id": ObjectId(stands[0]["_id"])}))
     else:
         return messages["all_busy"]

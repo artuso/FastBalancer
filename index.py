@@ -7,8 +7,9 @@ import os
 
 def start_app():
     fa = FastAPI()
-    fa.include_router(stand)
-    fa.include_router(accessibility)
+    routes_collection = [stand, accessibility]
+    for rout in routes_collection:
+        fa.include_router(rout)
     return fa
 
 
